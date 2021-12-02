@@ -44,6 +44,7 @@ module.exports = {
     'require-await': 0,
     'handle-callback-err': 1,
     'consistent-return': 0,
+    'no-promise-executor-return': 1,
     'node/no-callback-literal': 0,
     'react/react-in-jsx-scope': 0,
     'react/self-closing-comp': 0,

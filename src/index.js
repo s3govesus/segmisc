@@ -438,3 +438,9 @@ exports.timestampToDate = (timestamp) => {
   const time = `${year}-${month}-${date} ${hour}:${min}:${sec}`;
   return time;
 };
+
+/******************************************************************************/
+
+exports.sleep = async (msec) => {
+  return new Promise((resolve) => setTimeout(resolve, msec));
+};
