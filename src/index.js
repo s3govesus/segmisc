@@ -444,3 +444,152 @@ exports.timestampToDate = (timestamp) => {
 exports.sleep = async (msec) => {
   return new Promise((resolve) => setTimeout(resolve, msec));
 };
+
+/******************************************************************************/
+
+exports.cipher = [
+  {
+    symbol: `0`,
+    value: 0,
+  },
+  {
+    symbol: `1`,
+    value: 1,
+  },
+  {
+    symbol: `2`,
+    value: 2,
+  },
+  {
+    symbol: `3`,
+    value: 3,
+  },
+  {
+    symbol: `4`,
+    value: 4,
+  },
+  {
+    symbol: `5`,
+    value: 5,
+  },
+  {
+    symbol: `6`,
+    value: 6,
+  },
+  {
+    symbol: `7`,
+    value: 7,
+  },
+  {
+    symbol: `8`,
+    value: 8,
+  },
+  {
+    symbol: `9`,
+    value: 9,
+  },
+  {
+    symbol: `a`,
+    value: 10,
+  },
+  {
+    symbol: `b`,
+    value: 11,
+  },
+  {
+    symbol: `c`,
+    value: 12,
+  },
+  {
+    symbol: `d`,
+    value: 13,
+  },
+  {
+    symbol: `e`,
+    value: 14,
+  },
+  {
+    symbol: `f`,
+    value: 15,
+  },
+  {
+    symbol: `g`,
+    value: 16,
+  },
+  {
+    symbol: `h`,
+    value: 17,
+  },
+  {
+    symbol: `i`,
+    value: 18,
+  },
+  {
+    symbol: `j`,
+    value: 19,
+  },
+  {
+    symbol: `k`,
+    value: 20,
+  },
+  {
+    symbol: `l`,
+    value: 21,
+  },
+  {
+    symbol: `m`,
+    value: 22,
+  },
+  {
+    symbol: `n`,
+    value: 23,
+  },
+  {
+    symbol: `o`,
+    value: 24,
+  },
+  {
+    symbol: `p`,
+    value: 25,
+  },
+  {
+    symbol: `q`,
+    value: 26,
+  },
+  {
+    symbol: `r`,
+    value: 27,
+  },
+  {
+    symbol: `s`,
+    value: 28,
+  },
+  {
+    symbol: `t`,
+    value: 29,
+  },
+  {
+    symbol: `u`,
+    value: 30,
+  },
+  {
+    symbol: `v`,
+    value: 31,
+  },
+  {
+    symbol: `w`,
+    value: 32,
+  },
+  {
+    symbol: `x`,
+    value: 33,
+  },
+  {
+    symbol: `y`,
+    value: 34,
+  },
+  {
+    symbol: `z`,
+    value: 35,
+  },
+];
