@@ -593,3 +593,45 @@ exports.cipher = [
     value: 35,
   },
 ];
+
+/******************************************************************************/
+
+// receives a string of a combined IPv6 and IPv4 address (assuming that order) and will return either one or the other or both as an object
+// const exStr = `::ffff:192.168.86.1`;
+// const exOptions = {
+//   get: `ipv4`, // what type of IP to return from the string : 'ipv4' for IPv4, 'ipv6' for IPv6, or 'both' for an object with both IPv4 and IPv6 strings
+// }
+// TODO make this so it can handle a string that only contains IPv6 data - currently will only work with a string that contains only IPv4 or both IPv6 and IPv4 (and in that order)
+exports.separateIP = (str, options) => {
+  let result;
+
+  // get the options or fill with defaults
+  if (options === undefined || typeof options !== `object`) {
+    options = {
+      get: `ipv4`,
+    };
+  } else {
+    if (options.get === undefined || typeof options.get !== `string`) {
+      options.get = `ipv4`;
+    } else {
+      options.get = options.get.toLowerCase();
+    }
+  }
+
+  let v4Start = str.lastIndexOf(`:`) + 1 || 0;
+  let ipv4 = str.substring(v4Start);
+  let ipv6 = str.substring(0, v4Start - 1);
+
+  if (options.get === `ipv4`) {
+    result = ipv4;
+  } else if (options.get === `ipv6`) {
+    result = ipv6;
+  } else if (options.get === `both`) {
+    result = {
+      ipv4,
+      ipv6,
+    };
+  }
+
+  return result;
+};

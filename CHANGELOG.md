@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 0.3.1: separateIP
+- added `separateIP()` - a function for receiving a combined string of both IPv6 and IPv4 addresses and separating them out into either one or the other, or an object containing both
+
 ### 0.2.1: cipher
 - added a cipher for alphanumeric values
 
