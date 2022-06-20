@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 0.4.1: queue
+- added a `Queue` class for implementing queue structures
+
 ### 0.3.1: separateIP
 - added `separateIP()` - a function for receiving a combined string of both IPv6 and IPv4 addresses and separating them out into either one or the other, or an object containing both
 

@@ -1,0 +1,33 @@
+class Queue {
+  cosntructor() {
+    this.items = [];
+  }
+
+  add(element) {
+    this.items.push(element);
+  }
+
+  remove() {
+    return this.items.shift();
+  }
+
+  isEmpty() {
+    return this.items.length === 0;
+  }
+
+  check() {
+    if (!this.isEmpty()) {
+      return this.items[0];
+    }
+    return null;
+  }
+
+  size() {
+    return this.items.length;
+  }
+
+  print() {
+    console.log(this.items.toString());
+  }
+}
+exports.Queue = Queue;
