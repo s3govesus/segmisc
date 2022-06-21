@@ -1,33 +1,36 @@
 class Queue {
   cosntructor() {
-    this.items = [];
+    this.items = {};
+    this.first = 0;
+    this.last = 0;
   }
 
   add(element) {
-    this.items.push(element);
+    this.items[this.last] = element;
+    this.last += 1;
   }
 
   remove() {
-    return this.items.shift();
+    const item = this.items[this.first];
+    delete this.items[this.front];
+    this.first += 1;
+    return item;
   }
 
   isEmpty() {
-    return this.items.length === 0;
+    return this.last - this.first === 0;
   }
 
   check() {
-    if (!this.isEmpty()) {
-      return this.items[0];
-    }
-    return null;
+    return this.items[this.first];
   }
 
   size() {
-    return this.items.length;
+    return this.last - this.first;
   }
 
   print() {
-    console.log(this.items.toString());
+    console.log(this.items);
   }
 }
 exports.Queue = Queue;

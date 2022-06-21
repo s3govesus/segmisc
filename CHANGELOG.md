@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 0.4.2: queue optimizations
+- optimized the performance of the `Queue` class
+
 ### 0.4.1: queue
 - added a `Queue` class for implementing queue structures
 
