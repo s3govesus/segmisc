@@ -1,5 +1,6 @@
 const { makeKey } = require(`segcryptor`);
 const { Queue } = require(`./queue`);
+const { Ring } = require(`./ring`);
 
 /******************************************************************************/
 
@@ -638,3 +639,4 @@ exports.separateIP = (str, options) => {
 };
 
 exports.Queue = Queue;
+exports.Ring = Ring;

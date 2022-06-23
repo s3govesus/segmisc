@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 0.5.1: ring buffer
+- added a `Ring` class for implementing ring buffers / circular queues
+
 ### 0.4.2: queue optimizations
 - optimized the performance of the `Queue` class
 
