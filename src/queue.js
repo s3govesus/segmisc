@@ -1,5 +1,5 @@
 class Queue {
-  cosntructor() {
+  constructor() {
     this.items = {};
     this.first = 0;
     this.last = 0;
@@ -29,8 +29,17 @@ class Queue {
     return this.last - this.first;
   }
 
-  print() {
+  print(options) {
+    // TODO implement the options
     console.log(this.items);
+  }
+
+  toString(options) {
+    // TODO implement the options and make this all a bit more elegant
+
+    let returnStr = ``;
+    returnStr = JSON.stringify(this.items);
+    return returnStr;
   }
 }
 exports.Queue = Queue;

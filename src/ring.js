@@ -8,13 +8,19 @@ class Ring {
     this.front = -1;
   }
 
+  /******************************************************************************/
+
   isFull() {
     return this.currentLength === this.capacity;
   }
 
+  /******************************************************************************/
+
   isEmpty() {
     return this.currentLength === 0;
   }
+
+  /******************************************************************************/
 
   add(element) {
     // if the ring buffer isn't full
@@ -27,6 +33,8 @@ class Ring {
       }
     }
   }
+
+  /******************************************************************************/
 
   remove() {
     if (this.isEmpty()) {
@@ -43,6 +51,8 @@ class Ring {
     return item;
   }
 
+  /******************************************************************************/
+
   check() {
     if (!this.isEmpty()) {
       return this.items[this.front];
@@ -50,18 +60,63 @@ class Ring {
     return null;
   }
 
-  print() {
+  /******************************************************************************/
+
+  print(options) {
+    // get or fill the options with defaults
+    // TODO add more options?
+    if (options === undefined) {
+      options = {
+        separator: `, `,
+      };
+    }
+    if (options.separator === undefined) {
+      options.separator = `, `;
+    }
+
     if (this.isEmpty()) {
-      console.log(`Queue is empty`);
+      console.log(`{}`);
     } else {
       let i;
       let str = ``;
       for (i = this.front; i !== this.rear; i = (i + 1) % this.capacity) {
-        str += `${this.items[i]} `;
+        str += `${this.items[i]}${options.separator}`;
       }
       str += this.items[i];
       console.log(str);
     }
   }
+
+  /******************************************************************************/
+
+  toString(options) {
+    let returnString = ``;
+
+    // get or fill the options with defaults
+    // TODO add more options?
+    if (options === undefined) {
+      options = {
+        separator: `, `,
+      };
+    }
+    if (options.separator === undefined) {
+      options.separator = `, `;
+    }
+
+    if (this.isEmpty() === false) {
+      let i;
+      for (i = this.front; i !== this.rear; i = (i + 1) % this.capacity) {
+        returnString += `${this.items[i]}${options.separator}`;
+      }
+      returnString += this.items[i];
+    }
+
+    return returnString;
+  }
 }
+
+/******************************************************************************/
+
 exports.Ring = Ring;
+exports.RingBuffer = Ring;
+exports.CircularQueue = Ring;

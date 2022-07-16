@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+### 0.6.1: linked list
+- added a `LList` or `LinkedList` class for implementing linked lists
+- moved `cipher` over to its own file
+- added `toString()` to the `Ring` class
+- added the `Stack` class for a last in first out data structure using the `LList` class
+- added the `LLQueue` or `LinkedListQueue` class for working with a queue structure that uses a linked list
+- added `src/tests.js` for performing tests on various functions and classes
+
 ### 0.5.1: ring buffer
 - added a `Ring` class for implementing ring buffers / circular queues
 

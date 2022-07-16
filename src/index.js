@@ -1,16 +1,37 @@
 const { makeKey } = require(`segcryptor`);
+const { cipher, cipher62 } = require(`./cipher`);
+const { DLList, DoublyLinkedList } = require(`./dllist`);
 const { Queue } = require(`./queue`);
-const { Ring } = require(`./ring`);
+const { Ring, RingBuffer, CircularQueue } = require(`./ring`);
+const { LList, LinkedList } = require(`./llist`);
+const { LLQueue, LinkedListQueue } = require(`./llqueue`);
+const { Stack } = require(`./stack`);
+
+exports.cipher = cipher;
+exports.cipher62 = cipher62;
+exports.DLList = DLList;
+exports.DoublyLinkedList = DoublyLinkedList;
+exports.Queue = Queue;
+exports.Ring = Ring;
+exports.RingBuffer = RingBuffer;
+exports.CircularQueue = CircularQueue;
+exports.LList = LList;
+exports.LinkedList = LinkedList;
+exports.LLQueue = LLQueue;
+exports.LinkedListQueue = LinkedListQueue;
+exports.Stack = Stack;
 
 /******************************************************************************/
 
 // check if the string is empty or contains only whitespace characters
+// returns undefined if the value is not empty
+// returns an object with a 'error' property containing an error message if the value is empty
 //
 // EXAMPLE OPTIONS
 // const options = {
 //   type: `character string`
 // };
-exports.checkEmpty = (value, options) => {
+function checkEmpty(value, options) {
   let result;
   try {
     // get the options or fill in the undefined with defaults
@@ -36,19 +57,22 @@ exports.checkEmpty = (value, options) => {
     };
   }
   return result;
-};
+}
+exports.checkEmpty = checkEmpty;
 
 /******************************************************************************/
 
 // check if a string is too many characters in length
+// returns an object with an 'error' property containing an appropriate error message if the string is too long
+// returns undefined if the string is not too long
 //
 // EXAMPLE OPTIONS
 // const options = {
 //   type: `character string`,
 //   max: 255,
-//   filterWhitespace: false, // ignore whitespace characters when calculating string length
+//   ignoreWhitespace: false, // ignore whitespace characters when calculating string length
 // };
-exports.checkLong = (value, options) => {
+function checkLong(value, options) {
   let result;
   try {
     // get the options or fill in the undefined with defaults
@@ -56,7 +80,7 @@ exports.checkLong = (value, options) => {
       options = {
         type: `character string`,
         max: 255,
-        filterWhitespace: false,
+        ignoreWhitespace: false,
       };
     } else {
       if (options.type === undefined) {
@@ -65,13 +89,13 @@ exports.checkLong = (value, options) => {
       if (options.max === undefined) {
         options.max = 255; // use 255 as it is the max length of a VARCHAR in SQL
       }
-      if (options.filterWhitespace === undefined) {
-        options.filterWhitespace = false;
+      if (options.ignoreWhitespace === undefined) {
+        options.ignoreWhitespace = false;
       }
     }
 
     let valueCheck = value;
-    if (options.filterWhitespace === true) {
+    if (options.ignoreWhitespace === true) {
       valueCheck = valueCheck.replace(/[\s\t\r\n]/g, ``);
     }
     if (valueCheck.length > options.max) {
@@ -88,7 +112,8 @@ exports.checkLong = (value, options) => {
     };
   }
   return result;
-};
+}
+exports.checkLong = checkLong;
 
 /******************************************************************************/
 
@@ -98,9 +123,9 @@ exports.checkLong = (value, options) => {
 // const options = {
 //   type: `character string`,
 //   min: 1,
-//   filterWhitespace: false,
+//   ignoreWhitespace: false,
 // };
-exports.checkShort = (value, options) => {
+function checkShort(value, options) {
   let result;
   try {
     // get the options or fill in the undefined with defaults
@@ -108,7 +133,7 @@ exports.checkShort = (value, options) => {
       options = {
         type: `character string`,
         min: 1,
-        filterWhitespace: false,
+        ignoreWhitespace: false,
       };
     } else {
       if (options.type === undefined) {
@@ -121,15 +146,15 @@ exports.checkShort = (value, options) => {
       } else {
         options.min = Number(options.min);
       }
-      if (options.filterWhitespace === undefined) {
-        options.filterWhitespace = false;
+      if (options.ignoreWhitespace === undefined) {
+        options.ignoreWhitespace = false;
       } else {
-        options.filterWhitespace = this.toBoolean(options.filterWhitespace);
+        options.ignoreWhitespace = this.toBoolean(options.ignoreWhitespace);
       }
     }
 
     let valueCheck = value;
-    if (options.filterWhitespace === true) {
+    if (options.ignoreWhitespace === true) {
       valueCheck = valueCheck.replace(/[\s\t\r\n]/g, ``);
     }
     if (valueCheck.length < options.min) {
@@ -154,17 +179,20 @@ exports.checkShort = (value, options) => {
     }
   }
   return result;
-};
+}
+exports.checkShort = checkShort;
 
 /******************************************************************************/
 
 // checks to ensure that string meets the expectations of a regular expression
+// returns undefined if the string matches the regex requirements
+// returns an object with 'error' and possibly 'exception' properties containing information on the issue with the string
 //
 // EXAMPLE OPTIONS
 // const options = {
 //   type: `data value`,
 // };
-exports.checkRegex = (value, regex, options) => {
+function checkRegex(value, regex, options) {
   let result;
 
   try {
@@ -205,12 +233,13 @@ exports.checkRegex = (value, regex, options) => {
   }
 
   return result;
-};
+}
+exports.checkRegex = checkRegex;
 
 /******************************************************************************/
 
 // converts a string or numeric value to a boolean true or false
-exports.toBoolean = (value) => {
+function toBoolean(value) {
   if (typeof value === `number`) {
     if (value === 1) {
       return true;
@@ -220,12 +249,12 @@ exports.toBoolean = (value) => {
   if (typeof value === `string`) {
     value = value.toLowerCase();
     if (
-      value === `true` || value === `yes` || value === `1` || value === `on`
+      value === `true` || value === `yes` || value === `1` || value === `on` || value === `high`
     ) {
       return true;
     }
     if (
-      value === `false` || value === `no` || value === `0` || value === `off`
+      value === `false` || value === `no` || value === `0` || value === `off` || value === `low`
     ) {
       return false;
     }
@@ -241,7 +270,8 @@ exports.toBoolean = (value) => {
   throw new Error(
     `Error attempting to parse ${JSON.stringify(value)} as a boolean value.`,
   );
-};
+}
+exports.toBoolean = toBoolean;
 
 /******************************************************************************/
 
@@ -348,7 +378,10 @@ exports.toBoolean = (value) => {
 
 /******************************************************************************/
 
-exports.padWithZeroes = (number, length) => {
+// takes a number and returns a string padded to the left with a certain number of zeroes
+//  where number is the number value to be turned into a string and padded
+//        length is the total length the resulting string should be
+function padWithZeroes(number, length) {
   let str = `${number}`;
 
   while (str.length < length) {
@@ -356,245 +389,115 @@ exports.padWithZeroes = (number, length) => {
   }
 
   return str;
-};
+}
+exports.padWithZeroes = padWithZeroes;
 
 /******************************************************************************/
 
 // converts a news article or dev blog title to an ID that can also be used as part of its URL
-exports.titleToID = (title) => {
+function titleToID(title, max) {
   let id = title;
-  // convert any spaces to dashes
-  id = id.replace(` `, `-`);
-  // remove any remaining whitespace
-  id = id.replace(/\s+/g, ``);
-  // remove any characters that are not letters/numbers/dashes
-  id = id.replace(/[^a-zA-Z0-9-]/g, ``);
+
+  // default to 40 maximum characters
+  max = max !== undefined ? max : 40;
+
   // reformat it to lowercase characters only
   id = id.toLowerCase();
+  // convert any whitespace to dashes
+  id = id.replace(/\s+/g, `-`);
+  // remove any characters that are not letters/numbers/dashes
+  id = id.replace(/[^a-z0-9-]/g, ``);
   // get up to the first 40 characters of the title
-  id = id.substring(0, 40);
+  id = id.substring(0, max);
 
   return id;
-};
+}
+exports.titleToID = titleToID;
 
 /******************************************************************************/
 
 // converts a forum post title to an ID that can be used as part of its URL
-exports.makeForumID = (title) => {
+// a certain number of the last characters are randomly generated to help ensure the ID is unique
+function makeForumID(title, max, suffixLength) {
   let id = title;
-  // convert any spaces to dashes
-  id = id.replace(` `, `-`);
-  // remove any remaining whitespace
-  id = id.replace(/\s+/g, ``);
-  // remove any characters that are not letters/numbers/dashes
-  id = id.replace(/[^a-zA-Z0-9-]/g, ``);
+
+  // default to 40 maximum characters
+  max = max !== undefined ? max : 40;
+  suffixLength = suffixLength !== undefined ? suffixLength : 8;
+
   // reformat it to lowercase characters only
   id = id.toLowerCase();
-  // get up to the first 32 characters of the title
-  id = id.substring(0, 32);
+  // convert any whitespace to dashes
+  id = id.replace(/\s+/g, `-`);
+  // remove any characters that are not letters/numbers/dashes
+  id = id.replace(/[^a-z0-9-]/g, ``);
+  // get the first certain number of characters (max - suffixLength)
+  id = id.substring(0, (max - suffixLength));
 
   const idSuffix = makeKey({
-    size: 7,
+    size: suffixLength,
     isComplex: true,
   });
 
-  id = `${id}_${idSuffix}`;
+  id = `${id}${idSuffix}`;
 
   return id;
-};
+}
+exports.makeForumID = makeForumID;
 
 /******************************************************************************/
 
 // takes a user's socialID and reformats it, adding in the '#' before the number suffix
-exports.formatID = (id) => {
+function formatID(id) {
   const firstPart = id.slice(0, id.length - 4);
   const lastPart = id.slice(id.length - 4, id.length);
   return `${firstPart}#${lastPart}`;
-};
+}
+exports.formatID = formatID;
+exports.formatSocial = formatID;
 
 /******************************************************************************/
 
 // removes the # from a formatted socialID
-exports.reverseFormatID = (id) => {
+function reverseFormatID(id) {
   const firstPart = id.slice(0, id.length - 5);
   const lastPart = id.slice(id.length - 4, id.length);
   return `${firstPart}${lastPart}`;
-};
+}
+exports.reverseFormatID = reverseFormatID;
+exports.deformatSocial = reverseFormatID;
 
 /******************************************************************************/
 
 //
 // TODO modify this to accept an options argument
-exports.timestampToDate = (timestamp) => {
+function timestampToDate(timestamp) {
+  // generate a timestamp using the current time if no timestamp was provided as an argument for the function
   timestamp = timestamp !== undefined ? timestamp : Date.now();
-  const initial = new Date(timestamp);
-  const months = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
-  const year = initial.getFullYear();
-  // const month = months[initial.getMonth()];
-  const month = this.padWithZeroes(initial.getMonth() + 1, 2);
-  const date = this.padWithZeroes(initial.getDate(), 2);
-  const hour = this.padWithZeroes(initial.getHours(), 2);
-  const min = this.padWithZeroes(initial.getMinutes(), 2);
-  const sec = this.padWithZeroes(initial.getSeconds(), 2);
+
+  // create a javascript date object from the timestamp data
+  const dateObj = new Date(timestamp);
+  // const months = [`Jan`, `Feb`, `Mar`, `Apr`, `May`, `Jun`, `Jul`, `Aug`, `Sep`, `Oct`, `Nov`, `Dec`];
+  const year = dateObj.getFullYear();
+  // const month = months[dateObj.getMonth()];
+  // increment the month by 1 because the javascript date object starts the months at 0 for january
+  const month = padWithZeroes(dateObj.getMonth() + 1, 2);
+  const date = padWithZeroes(dateObj.getDate(), 2);
+  const hour = padWithZeroes(dateObj.getHours(), 2);
+  const min = padWithZeroes(dateObj.getMinutes(), 2);
+  const sec = padWithZeroes(dateObj.getSeconds(), 2);
   // const sec = initial.getSeconds();
   const time = `${year}-${month}-${date} ${hour}:${min}:${sec}`;
   return time;
-};
+}
+exports.timestampToDate = timestampToDate;
 
 /******************************************************************************/
 
-exports.sleep = async (msec) => {
+async function sleep(msec) {
   return new Promise((resolve) => setTimeout(resolve, msec));
-};
-
-/******************************************************************************/
-
-exports.cipher = [
-  {
-    symbol: `0`,
-    value: 0,
-  },
-  {
-    symbol: `1`,
-    value: 1,
-  },
-  {
-    symbol: `2`,
-    value: 2,
-  },
-  {
-    symbol: `3`,
-    value: 3,
-  },
-  {
-    symbol: `4`,
-    value: 4,
-  },
-  {
-    symbol: `5`,
-    value: 5,
-  },
-  {
-    symbol: `6`,
-    value: 6,
-  },
-  {
-    symbol: `7`,
-    value: 7,
-  },
-  {
-    symbol: `8`,
-    value: 8,
-  },
-  {
-    symbol: `9`,
-    value: 9,
-  },
-  {
-    symbol: `a`,
-    value: 10,
-  },
-  {
-    symbol: `b`,
-    value: 11,
-  },
-  {
-    symbol: `c`,
-    value: 12,
-  },
-  {
-    symbol: `d`,
-    value: 13,
-  },
-  {
-    symbol: `e`,
-    value: 14,
-  },
-  {
-    symbol: `f`,
-    value: 15,
-  },
-  {
-    symbol: `g`,
-    value: 16,
-  },
-  {
-    symbol: `h`,
-    value: 17,
-  },
-  {
-    symbol: `i`,
-    value: 18,
-  },
-  {
-    symbol: `j`,
-    value: 19,
-  },
-  {
-    symbol: `k`,
-    value: 20,
-  },
-  {
-    symbol: `l`,
-    value: 21,
-  },
-  {
-    symbol: `m`,
-    value: 22,
-  },
-  {
-    symbol: `n`,
-    value: 23,
-  },
-  {
-    symbol: `o`,
-    value: 24,
-  },
-  {
-    symbol: `p`,
-    value: 25,
-  },
-  {
-    symbol: `q`,
-    value: 26,
-  },
-  {
-    symbol: `r`,
-    value: 27,
-  },
-  {
-    symbol: `s`,
-    value: 28,
-  },
-  {
-    symbol: `t`,
-    value: 29,
-  },
-  {
-    symbol: `u`,
-    value: 30,
-  },
-  {
-    symbol: `v`,
-    value: 31,
-  },
-  {
-    symbol: `w`,
-    value: 32,
-  },
-  {
-    symbol: `x`,
-    value: 33,
-  },
-  {
-    symbol: `y`,
-    value: 34,
-  },
-  {
-    symbol: `z`,
-    value: 35,
-  },
-];
+}
+exports.sleep = sleep;
 
 /******************************************************************************/
 
@@ -604,7 +507,7 @@ exports.cipher = [
 //   get: `ipv4`, // what type of IP to return from the string : 'ipv4' for IPv4, 'ipv6' for IPv6, or 'both' for an object with both IPv4 and IPv6 strings
 // }
 // TODO make this so it can handle a string that only contains IPv6 data - currently will only work with a string that contains only IPv4 or both IPv6 and IPv4 (and in that order)
-exports.separateIP = (str, options) => {
+function separateIP(str, options) {
   let result;
 
   // get the options or fill with defaults
@@ -636,7 +539,5 @@ exports.separateIP = (str, options) => {
   }
 
   return result;
-};
-
-exports.Queue = Queue;
-exports.Ring = Ring;
+}
+exports.separateIP = separateIP;

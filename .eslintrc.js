@@ -56,5 +56,6 @@ module.exports = {
     'vue/max-attributes-per-line': 0,
     'vue/mustache-interpolation-spacing': 0,
     'vue/singleline-html-element-content-newline': 0,
+    'max-classes-per-file': 0,
   },
 };
