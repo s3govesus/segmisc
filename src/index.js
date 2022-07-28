@@ -1,4 +1,6 @@
 const { makeKey } = require(`segcryptor`);
+
+const { BST, BinarySearchTree } = require(`./bst`);
 const { cipher, cipher62 } = require(`./cipher`);
 const { DLList, DoublyLinkedList } = require(`./dllist`);
 const { Queue } = require(`./queue`);
@@ -9,6 +11,8 @@ const { Stack } = require(`./stack`);
 
 exports.cipher = cipher;
 exports.cipher62 = cipher62;
+exports.BST = BST;
+exports.BinarySearchTree = BinarySearchTree;
 exports.DLList = DLList;
 exports.DoublyLinkedList = DoublyLinkedList;
 exports.Queue = Queue;

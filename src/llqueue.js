@@ -16,9 +16,23 @@ class LLQueue {
 
   /******************************************************************************/
 
+  // an alternative name for `add()`
+  enqueue(value) {
+    this.add(value);
+  }
+
+  /******************************************************************************/
+
   // remove the item from the front of the queue
   remove() {
     return this.list.removeFromFront();
+  }
+
+  /******************************************************************************/
+
+  // an alternative name for `remove()`
+  dequeue() {
+    this.remove();
   }
 
   /******************************************************************************/

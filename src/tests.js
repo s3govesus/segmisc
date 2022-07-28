@@ -1,3 +1,4 @@
+const { BST } = require(`./bst`);
 const { cipher, cipher62 } = require(`./cipher`);
 const { DLList } = require(`./dllist`); // alternatively, DoublyLinkedList
 const { LList } = require(`./llist`); // alternatively, LinkedList
@@ -14,6 +15,74 @@ console.log(`Running tests...`);
 console.log(``);
 console.log(`/******************************************************************************/`);
 console.log(``);
+
+/******************************************************************************/
+
+function testBST() {
+  console.log(`Testing the binary search tree class...`);
+  console.log();
+
+  let tree = new BST();
+
+  console.log(`insert(10)...`);
+  tree.insert(10);
+  let t1 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t1));
+  console.log();
+
+  console.log(`insert(5)...`);
+  tree.insert(5);
+  let t2 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t2));
+  console.log();
+
+  console.log(`insert(15)...`);
+  tree.insert(15);
+  let t3 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t3));
+  console.log();
+
+  console.log(`insert(25)...`);
+  tree.insert(25);
+  let t4 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t4));
+  console.log();
+
+  console.log(`insert(7)...`);
+  tree.insert(7);
+  let t5 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t5));
+  console.log();
+
+  console.log(`insert(30)...`);
+  tree.insert(30);
+  let t6 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t6));
+  console.log();
+
+  console.log(`MIN : ${tree.min()}`);
+  console.log(`MAX : ${tree.max()}`);
+  console.log();
+
+  console.log(`delete(15)...`);
+  tree.delete(15);
+  let t7 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t7));
+  console.log();
+
+  console.log(`delete(5)...`);
+  tree.delete(5);
+  let t8 = tree.traverse(`levelorder`);
+  console.log(JSON.stringify(t8));
+  console.log();
+
+  console.log();
+  console.log(`Finished testing the binary search tree class!`);
+  console.log();
+  console.log(`/******************************************************************************/`);
+  console.log();
+}
+testBST();
 
 /******************************************************************************/
 

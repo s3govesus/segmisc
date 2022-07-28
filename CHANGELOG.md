@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 0.7.1: bst
+- added the `BST` class for working with binary search trees
+
 ### 0.6.1: linked list
 - added a `LList` or `LinkedList` class for implementing linked lists
 - moved `cipher` over to its own file
