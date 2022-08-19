@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 0.8.1: truncateFloat
+- added `truncateFloat()` or `truncFloat()` for truncating floating point numbers
+
 ### 0.7.1: bst
 - added the `BST` class for working with binary search trees
 

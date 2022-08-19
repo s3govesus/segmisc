@@ -545,3 +545,22 @@ function separateIP(str, options) {
   return result;
 }
 exports.separateIP = separateIP;
+
+/******************************************************************************/
+
+function truncateFloat(value, precision) {
+  if (precision === undefined) {
+    precision = 0;
+  }
+  // Ensure the multiplier is a float
+  var pMult = 1.0;
+  while (precision--) {
+    pMult *= 10;
+  }
+  // Multiply the value by the precision multiplier,
+  // convert it to int (discarding any pesky leftover decimals)
+  // and float-divide it by the same multiplier
+  return ((value * pMult) >> 0) / pMult;
+}
+exports.truncateFloat = truncateFloat;
+exports.truncFloat = truncateFloat;
