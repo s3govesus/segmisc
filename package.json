@@ -1,6 +1,6 @@
 {
   "name": "segmisc",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Miscellaneous functions that I use in various projects - some of these are mostly useless, and some could probably easily be replaced with something like lodash, but oh well...",
   "main": "src/index.js",
   "scripts": {

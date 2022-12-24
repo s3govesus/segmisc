@@ -7,7 +7,7 @@ const { Queue } = require(`./queue`);
 const { Ring } = require(`./ring`); // alternatively, RingBuffer, CircularQueue
 const { Stack } = require(`./stack`);
 const {
-  checkEmpty, checkLong, checkShort, checkRegex, toBoolean, padWithZeroes, titleToID, makeForumID, formatSocial, deformatSocial, timestampToDate, sleep, separateIP,
+  checkEmpty, checkLong, checkShort, checkRegex, toBoolean, padWithZeroes, titleToID, makeForumID, formatSocial, deformatSocial, timestampToDate, sleep, separateIP, truncateFloat,
 } = require(`./index`);
 
 console.log(``);
@@ -572,3 +572,21 @@ function testTimestampToDate() {
   console.log(``);
 }
 testTimestampToDate();
+
+/******************************************************************************/
+
+function testTruncFloat() {
+  console.log(`Testing the truncateFloat() function...`);
+  console.log();
+  console.log(`truncateFloat(0.12345, 1) : ${truncateFloat(0.12345, 1)}`);
+  console.log(`truncateFloat(0.12345, 3) : ${truncateFloat(0.12345, 3)}`);
+  console.log(`truncateFloat(0.12345, 7) : ${truncateFloat(0.12345, 7)}`);
+  console.log(`truncateFloat(0.12345, 0) : ${truncateFloat(0.12345, 0)}`);
+  console.log(`truncateFloat(0.12345, 5) : ${truncateFloat(0.12345, 5)}`);
+  console.log();
+  console.log(`Finished testing the truncateFloat() function!`);
+  console.log(``);
+  console.log(`/******************************************************************************/`);
+  console.log(``);
+}
+testTruncFloat();

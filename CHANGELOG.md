@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 0.8.2: cleaning
+- cleaned up code a bit
+- fixed some minor (mostly cosmetic) issues with the `truncateFloat()` function
+- added tests for the `truncateFloat()` function
+
 ### 0.8.1: truncateFloat
 - added `truncateFloat()` or `truncFloat()` for truncating floating point numbers
 

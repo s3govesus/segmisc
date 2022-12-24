@@ -9,22 +9,6 @@ const { LList, LinkedList } = require(`./llist`);
 const { LLQueue, LinkedListQueue } = require(`./llqueue`);
 const { Stack } = require(`./stack`);
 
-exports.cipher = cipher;
-exports.cipher62 = cipher62;
-exports.BST = BST;
-exports.BinarySearchTree = BinarySearchTree;
-exports.DLList = DLList;
-exports.DoublyLinkedList = DoublyLinkedList;
-exports.Queue = Queue;
-exports.Ring = Ring;
-exports.RingBuffer = RingBuffer;
-exports.CircularQueue = CircularQueue;
-exports.LList = LList;
-exports.LinkedList = LinkedList;
-exports.LLQueue = LLQueue;
-exports.LinkedListQueue = LinkedListQueue;
-exports.Stack = Stack;
-
 /******************************************************************************/
 
 // check if the string is empty or contains only whitespace characters
@@ -62,7 +46,6 @@ function checkEmpty(value, options) {
   }
   return result;
 }
-exports.checkEmpty = checkEmpty;
 
 /******************************************************************************/
 
@@ -117,7 +100,6 @@ function checkLong(value, options) {
   }
   return result;
 }
-exports.checkLong = checkLong;
 
 /******************************************************************************/
 
@@ -184,7 +166,6 @@ function checkShort(value, options) {
   }
   return result;
 }
-exports.checkShort = checkShort;
 
 /******************************************************************************/
 
@@ -238,7 +219,6 @@ function checkRegex(value, regex, options) {
 
   return result;
 }
-exports.checkRegex = checkRegex;
 
 /******************************************************************************/
 
@@ -275,110 +255,6 @@ function toBoolean(value) {
     `Error attempting to parse ${JSON.stringify(value)} as a boolean value.`,
   );
 }
-exports.toBoolean = toBoolean;
-
-/******************************************************************************/
-
-// // converts the format of a given IP address
-// // const exOptions = {
-// //   target: `string`, // returns the value as a given type (default is string)
-// //   filter: true, // remove punctuation syntax
-// //   limit: 12, // grabs the last n characters from the IP address (excluding syntax)
-// // };
-// module.exports.formatIP = (ip, options) => {
-//   if (options === undefined) {
-//     options = {
-//       target: `string`,
-//       filter: true,
-//       limit: 12,
-//     };
-//   } else {
-//     if (options.target === undefined || typeof options.target !== `string`) {
-//       options.target = `string`;
-//     }
-//     if (options.filter === undefined) {
-//       options.filter = true;
-//     }
-//     if (typeof options.filter !== `boolean`) {
-//       this.toBoolean(options.filter);
-//     }
-//     if (options.limit === undefined) {
-//       options.limit = 12;
-//     }
-//     if (typeof options.limit !== `number`) {
-//       options.limit = parseInt(options.limit, 10);
-//     }
-//   }
-//   if (typeof ip === `object`) {
-//     // it's likely an array
-//     return ipFromArray(ip, options);
-//   } if (typeof ip === `string`) {
-//     // it's a string, probably with some kind of formatting
-//   } else if (typeof ip === `number`) {
-//     // it's just one longass number???
-//   } else {
-//     // throw error?
-//   }
-//   return undefined; // had to include this line to make eslint happy
-// };
-
-// /******************************************************************************/
-
-// function ipFromArray(arr, options) {
-//   let result = ``;
-
-//   // determine if it's ipv4 or ipv6
-//   let ipV = 4;
-//   if (arr.length === 4) {
-//     // ipv4
-//     ipV = 4;
-//   } else {
-//     // ipv6
-//     ipV = 6;
-//   }
-
-//   // if the target is string, add leading zeroes back to the address for reasons..
-//   if (options.target === `string`) {
-//     for (let i in arr) {
-//       if (ipV === 4) {
-//         padWithZeroes(arr, 3);
-//       } else {
-//         padWithZeroes(arr, 4);
-//       }
-//     }
-//   }
-
-//   // handle converting the IP address array to a string
-//   if (options.target === `string`) {
-//     for (let i in arr) {
-//       if (ipV === 4) {
-//         // determine where to put the '.'
-//         if (i === 0) {
-//           result += `${arr[i]}`;
-//         } else {
-//           result += `.${arr[i]}`;
-//         }
-//       } else {
-//         if (i === 0) {
-//           result += `${arr[i]}`;
-//         } else {
-//           result += `:${arr[i]}`;
-//         }
-//       }
-//     }
-//   }
-
-//   if (options.filter === true) {
-//     result = result.replace(`.`, result);
-//     result = result.replace(`:`, result);
-//   }
-// }
-
-// /******************************************************************************/
-
-// function ipFromNumber(num) {
-
-// }
 
 /******************************************************************************/
 
@@ -394,7 +270,6 @@ function padWithZeroes(number, length) {
 
   return str;
 }
-exports.padWithZeroes = padWithZeroes;
 
 /******************************************************************************/
 
@@ -416,7 +291,6 @@ function titleToID(title, max) {
 
   return id;
 }
-exports.titleToID = titleToID;
 
 /******************************************************************************/
 
@@ -447,7 +321,6 @@ function makeForumID(title, max, suffixLength) {
 
   return id;
 }
-exports.makeForumID = makeForumID;
 
 /******************************************************************************/
 
@@ -457,8 +330,7 @@ function formatID(id) {
   const lastPart = id.slice(id.length - 4, id.length);
   return `${firstPart}#${lastPart}`;
 }
-exports.formatID = formatID;
-exports.formatSocial = formatID;
+const formatSocial = formatID;
 
 /******************************************************************************/
 
@@ -468,8 +340,7 @@ function reverseFormatID(id) {
   const lastPart = id.slice(id.length - 4, id.length);
   return `${firstPart}${lastPart}`;
 }
-exports.reverseFormatID = reverseFormatID;
-exports.deformatSocial = reverseFormatID;
+const deformatSocial = reverseFormatID;
 
 /******************************************************************************/
 
@@ -494,14 +365,12 @@ function timestampToDate(timestamp) {
   const time = `${year}-${month}-${date} ${hour}:${min}:${sec}`;
   return time;
 }
-exports.timestampToDate = timestampToDate;
 
 /******************************************************************************/
 
 async function sleep(msec) {
   return new Promise((resolve) => setTimeout(resolve, msec));
 }
-exports.sleep = sleep;
 
 /******************************************************************************/
 
@@ -544,23 +413,69 @@ function separateIP(str, options) {
 
   return result;
 }
-exports.separateIP = separateIP;
 
 /******************************************************************************/
 
+/**
+* Truncates a floating-point number to a specified number of decimal places.
+*
+* @param {number} value - The floating-point number to truncate.
+* @param {number} [precision=0] - The number of decimal places to keep.
+* @return {number} The truncated floating-point number.
+**/
 function truncateFloat(value, precision) {
   if (precision === undefined) {
     precision = 0;
   }
+
   // Ensure the multiplier is a float
-  var pMult = 1.0;
-  while (precision--) {
+  let pMult = 1.0;
+  let i = 0;
+  while (i < precision) {
     pMult *= 10;
+    i += 1;
   }
+
   // Multiply the value by the precision multiplier,
   // convert it to int (discarding any pesky leftover decimals)
   // and float-divide it by the same multiplier
-  return ((value * pMult) >> 0) / pMult;
+  return Math.floor(value * pMult) / pMult;
 }
-exports.truncateFloat = truncateFloat;
-exports.truncFloat = truncateFloat;
+const truncFloat = truncateFloat;
+
+/******************************************************************************/
+
+module.exports = {
+  cipher,
+  cipher62,
+  BST,
+  BinarySearchTree,
+  DLList,
+  DoublyLinkedList,
+  Queue,
+  Ring,
+  RingBuffer,
+  CircularQueue,
+  LList,
+  LinkedList,
+  LLQueue,
+  LinkedListQueue,
+  Stack,
+  checkEmpty,
+  checkLong,
+  checkShort,
+  checkRegex,
+  toBoolean,
+  padWithZeroes,
+  titleToID,
+  makeForumID,
+  formatID,
+  formatSocial,
+  reverseFormatID,
+  deformatSocial,
+  timestampToDate,
+  sleep,
+  separateIP,
+  truncateFloat,
+  truncFloat,
+};
